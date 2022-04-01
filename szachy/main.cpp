@@ -48,6 +48,63 @@ void uno(char boards[125][8][8]) {
 	cout << "boards: " << co << endl;
 }
 
+void dos(char boards[125][8][8]){
+    int big[25] = {0};
+    int small[25] = {0};
+    int mini= 64;
+    int ctr = 0;
+    bool equality = true;
+    int sum = 0;
+
+    for(int i = 0; i < 125; i++){
+        equality = true;
+        for (int bigI = 0; bigI < 25; bigI++){
+            //cout <<"big: " << big[bigI] << endl;
+            big[bigI] = 0;
+        }
+        for (int smallI = 0; smallI < 25; smallI++){
+            //cout << "small: " << small[smallI] << endl;
+            small[smallI] = 0;
+        }
+
+        for(int j = 0; j < 8; j++){
+            for(int k = 0; k < 8; k++){
+                if(boards[i][j][k] > 64 && boards[i][j][k] < 91){
+                    big[boards[i][j][k]-'A']++;
+                } else if(boards[i][j][k] > 96 && boards[i][j][k] < 122){
+                    small[boards[i][j][k]-'a']++;
+                }
+            }
+        }
+       for(int check = 0; check < 25; check++){
+        if(small[check] != big[check]){
+            equality = false;
+            break;
+        }
+       }
+       if(equality){
+        for(int wiersze = 0; wiersze < 8; wiersze++){
+            for(int kolumny = 0; kolumny < 8; kolumny++){
+                cout << boards[i][wiersze][kolumny];
+            }
+            cout << endl;
+        }
+        ctr++;
+        for(int num = 0; num < 25; num++){
+            sum += small[num];
+            sum += big[num];
+            cout << sum << endl;
+            if(sum < mini && sum != 0){
+                mini = sum;
+            }
+        }
+       }
+
+    }
+    cout << ctr << " " << mini;
+
+}
+
 int main(){
 	char boards[125][8][8];
 
@@ -58,19 +115,6 @@ int main(){
 			}
 		}
 	}
-
-	uno(boards);
-
-	// for(int i = 0; i < 125; i++){
-	// 	for(int j = 0; j < 8; j++){
-	// 		for(int k = 0; k < 8; k++){
-	// 			cout << boards[i][j][k];
-	// 		}
-	// 		cout << endl;
-	// 	}
-	// 	cout << endl;
-	// }
-
-
+	dos(boards);
 	return 0;
 }
