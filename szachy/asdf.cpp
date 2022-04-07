@@ -119,16 +119,66 @@ void tres(char boards[125][8][8]){
     int blackY = 0;
 
     //szukanie krola
+	bool isWhiteChecked = false;
 	for(int i = 0; i < 125; i++){
+		if(isWhiteChecked){
+			cout << "Krol bialy jest zatkowany" << endl;
+		}
+
 		for(int j = 0; j < 8; j++){
 			for(int k = 0; k < 8; k++){
 				if(boards[i][j][k] == 'K'){
                     whiteX = k;
                     whiteY = j;
 				}
-				if(boards)
+				if(boards[i][j][k] == 'k'){
+										blackX = k;
+										blackY = j;
+				}
 			}
 		}
+		for(int y = whiteY; y < 8; y++){//szukanie w dol
+			cout << boards[i][y][whiteX] << endl;
+			if(boards[i][y][whiteX] != '.'){
+				if(boards[i][y][whiteX] == 'w'){
+					isWhiteChecked = true;
+					break;
+				} else {
+					isWhiteChecked = false;
+					break;
+				}
+			}
+		}
+		if(!isWhiteChecked){
+			for(int y = whiteY; y > 0; y--){//szukanie w gore
+				cout << boards[i][y][whiteX] << endl;
+				if(boards[i][y][whiteX] != '.'){
+					if(boards[i][y][whiteX] == 'w'){
+						isWhiteChecked = true;
+						break;
+					} else {
+						isWhiteChecked = false;
+						break;
+					}
+				}
+			}
+		}
+		if(!isWhiteChecked){
+			for(int y = whiteY; y > 0; y--){
+				if(boards[i][whiteY][y] == '.'){
+					continue;
+				}else{
+					if(boards[i][y][whiteX] == 'w'){
+						isWhiteChecked = true;
+					}else{
+						isWhiteChecked = false;
+						break;
+					}
+				}
+
+			}
+		}
+
 	}
 
 }
